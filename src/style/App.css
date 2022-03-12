@@ -1,0 +1,83 @@
+html {
+  font-family: 'Roboto';
+  background-color: #1F2833;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.App-header {
+  color: white;
+  font-size: 48px;
+  line-height: 56px;
+}
+
+.content {
+  color: white;
+  background-color: #38485c;
+  width: 414px;
+  height: 896px;
+  border-radius: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+  .App {
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.body div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input-text-with-button {
+  width: 65%;
+  border-radius: 5px;
+  padding: 20px 10px;
+  margin-top: 20px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.input-text {
+  width: 80%;
+  border-radius: 5px;
+  padding: 20px 10px;
+  margin-top: 20px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.button-wide {
+  margin-top: 20px;
+  width: 85%;
+  background-color: #66FCF1;
+  border-radius: 12px;
+  padding: 20px 10px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.button-small {
+  margin-top: 20px;
+  width: 20%;
+  background-color: #66FCF1;
+  border-radius: 12px;
+  padding: 20px 10px;
+  font-size: 24px;
+  line-height: 28px;
+}
