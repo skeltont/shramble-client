@@ -38,7 +38,7 @@ html {
   flex-direction: column;
 }
 
-.body div {
+.row div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -54,7 +54,16 @@ html {
 }
 
 .input-text {
-  width: 80%;
+  width: 100%;
+  border-radius: 5px;
+  padding: 20px 10px;
+  margin-top: 20px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.input-number {
+  width: 100%;
   border-radius: 5px;
   padding: 20px 10px;
   margin-top: 20px;
@@ -64,7 +73,7 @@ html {
 
 .button-wide {
   margin-top: 20px;
-  width: 85%;
+  width: 100%;
   background-color: #66FCF1;
   border-radius: 12px;
   padding: 20px 10px;

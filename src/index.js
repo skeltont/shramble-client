@@ -9,15 +9,15 @@ import {
 import './style/index.css';
 
 import App from './components/App';
-import Home from './components/Home';
-import JoinRoom from './routes/join_room'
+import Home from './routes/home'
+import Match from './routes/match'
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path='/*' element={<App />}>
-        <Route index element={<Home />} />
-        <Route path='join_room' element={<JoinRoom />} />
+        <Route index element={<Home />}/>
+        <Route path='match' element={<Match />}/>
       </Route>
     </Routes>
   </BrowserRouter>,

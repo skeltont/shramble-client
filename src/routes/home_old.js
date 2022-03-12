@@ -1,5 +1,9 @@
-import '../style/Home.css';
 import React, { Component } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+import '../style/Home.css';
+
+const navigate = useNavigate()
 
 class Home extends Component {
   constructor(props) {
@@ -9,7 +13,7 @@ class Home extends Component {
       player_name: '',
       room_code: '',
       room_id: null,
-      token: null
+      redirect: false
     }
   }
 
@@ -37,6 +41,7 @@ class Home extends Component {
         this.setState({
           room_id: data['room_id'],
           room_code: data['room_code'],
+          redirect: true
         })
         sessionStorage.setItem('shrambleToken', data['token'])
       })
@@ -57,14 +62,27 @@ class Home extends Component {
         }
       })
     }).then((res) => res.json())
-      .then((data) => this.setState({
-        room_id: data['room_id'],
-        room_code: data['room_code']
-      }))
+      .then(data => {
+        this.setState({
+          room_id: data['room_id'],
+          room_code: data['room_code'],
+          redirect: true
+        })
+        if ('token' in data) {
+          sessionStorage.setItem('shrambleToken', data['token'])
+        }
+      })
       .catch((error) => console.log(error))
   }
 
   render() {
+    // if (this.state.redirect) {
+    //   return <Navigate to='/match' />;
+    // }
+    if (this.state.redirect) {
+      navigate('/match', { state: { owner: this.state.owner }})
+    }
+
     return (
       <div className="Home body">
         <input type="text" className="input-text" placeholder='Who are you' value={this.state.player_name} onChange={this.handleNameChange} />
