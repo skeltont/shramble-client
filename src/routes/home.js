@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import '../style/Home.css';
@@ -6,8 +6,10 @@ import '../style/Home.css';
 export default function Home() {
   const [name, setName] = useState('');
   const [roomCode, setRoomCode] = useState('');
-  const [redirect, setRedirect] = useState(false);
-  const [owner, setOwner] = useState(false)
+  const [join, setJoin] = useState({
+    owner: false,
+    redirect: false
+  })
 
   const navigate = useNavigate();
 
@@ -32,10 +34,12 @@ export default function Home() {
       })
     }).then((res) => res.json())
       .then(data => {
-        setOwner(data['owner'])
-        setRedirect(true)
-
         sessionStorage.setItem('shrambleToken', data['token'])
+
+        setJoin({
+          owner: data['owner'],
+          redirect: true
+        })
       })
       .catch((error) => console.log(error))
   }
@@ -55,19 +59,25 @@ export default function Home() {
       })
     }).then((res) => res.json())
       .then(data => {
-        setOwner(data['owner'])
-        setRedirect(true)
-
         if ('token' in data) {
           sessionStorage.setItem('shrambleToken', data['token'])
         }
+
+        setJoin({
+          owner: data['owner'],
+          redirect: true,
+        })
       })
       .catch((error) => console.log(error))
   }
 
-  if (redirect) {
-    navigate('/match', { state: { owner: owner }})
-  }
+  useEffect(() => {
+    const { owner, redirect } = join;
+
+    if (redirect) {
+      navigate('/match', { state: { owner } });
+    }
+  })
 
   return (
     <div className="Home body">
