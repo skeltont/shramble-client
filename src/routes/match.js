@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+
 import { useInterval } from '../hooks/useInterval';
+import { makeGetRequest } from '../hooks/makeRequest';
 import CreateMatch from '../components/CreateMatch';
 import Betting from '../components/Betting';
 import Ongoing from '../components/Ongoing';
@@ -21,27 +23,18 @@ export default function Match() {
   }
 
   function checkStage() {
-    fetch("http://localhost:4000/room", {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
+    makeGetRequest("/room", (data) => {
+      if (data['stage'] !== stage) {
+        setStage(data['stage'])
       }
-    }).then((res) => res.json())
-      .then(data => {
-        if (data['stage'] !== stage) {
-          setStage(data['stage'])
-        }
-        if (data['room_code'] !== roomCode) {
-          setRoomCode(data['room_code'])
-        }
-      })
-      .catch((error) => console.log(error));
+      if (data['room_code'] !== roomCode) {
+        setRoomCode(data['room_code'])
+      }
+    })
   }
 
   useInterval(async () => {
     checkStage()
-
   }, 2500)
 
   return (

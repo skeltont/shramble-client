@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import '../style/CreateMatch.css';
 
+import { makePostRequest } from '../hooks/makeRequest';
+
 export default function CreateMatch({owner, changeStage}) {
   const [stake, setStake] = useState('')
   const [contestantList, setContestantList] = useState([{ name: '' }])
@@ -28,23 +30,14 @@ export default function CreateMatch({owner, changeStage}) {
   }
 
   function handleStartMatch(e) {
-    fetch("http://localhost:4000/match", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      },
-      body: JSON.stringify({
-        match: {
-          stake: stake,
-          contestants: contestantList
-        }
-      })
-    }).then((res) => res.json())
-      .then(data => {
-        changeStage(data['next_stage'])
-      })
-      .catch((error) => console.log(error));
+    makePostRequest("/match", {
+      match: {
+        stake: stake,
+        contestants: contestantList
+      }
+    }, (data) => {
+      changeStage(data['next_stage'])
+    })
   }
 
   if (owner) {

@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
+import { makeGetRequest } from '../hooks/makeRequest';
+
 export default function Results({ owner, changeStage }) {
   const [standings, setStandings] = useState([{ name: '', winnings: 0.0 }])
 
   useEffect(() => {
-    fetch("http://localhost:4000/standings", {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      }
-    }).then((res) => res.json())
-      .then(data => {
-        console.log(data);
-        setStandings(data['standings']);
-      })
-      .catch((error) => console.log(error));
+    makeGetRequest("/standings", (data) => {
+      setStandings(data['standings']);
+    })
   }, [])
 
   function handleNewMatch(e) {
-
+    console.log('todo');
   }
 
   return (

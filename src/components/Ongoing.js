@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
+
 export default function Ongoing({ owner, changeStage }) {
   const [results, setResults] = useState([{name: '', contestant: ''}])
   const [contestantList, setContestantList] = useState([{ id: '', name: '' }])
@@ -7,39 +9,22 @@ export default function Ongoing({ owner, changeStage }) {
   const [winner, setWinner] = useState(null)
 
   useEffect(() => {
-    fetch("http://localhost:4000/result", {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      }
-    }).then((res) => res.json())
-      .then(data => {
-        setResults(data['results']);
-        setContestantList(data['contestants'])
-        setMatchId(data['match_id'])
-      })
-      .catch((error) => console.log(error));
+    makeGetRequest("/result", (data) => {
+      setResults(data['results']);
+      setContestantList(data['contestants'])
+      setMatchId(data['match_id'])
+    })
   }, [])
 
   function handleEndMatch(e) {
-    fetch("http://localhost:4000/end", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      },
-      body: JSON.stringify({
-        match: {
-          contestant_id: winner,
-          match_id: matchId
-        }
-      })
-    }).then((res) => res.json())
-      .then(data => {
-        changeStage(data['next_stage'])
-      })
-      .catch((error) => console.log(error));
+    makePostRequest("/end", {
+      match: {
+        contestant_id: winner,
+        match_id: matchId
+      }
+    }, (data) => {
+      changeStage(data['next_stage'])
+    })
   }
 
   function handleWinnerSelection(e) {

@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 import '../style/Home.css';
 
+import { makePostRequest } from '../hooks/makeRequest';
+
 export default function Home() {
   const [name, setName] = useState('');
   const [roomCode, setRoomCode] = useState('');
@@ -22,53 +24,32 @@ export default function Home() {
   }
 
   function handleCreateRoom(e) {
-    fetch("http://localhost:4000/room", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        room: {
-          player_name: name
-        }
-      })
-    }).then((res) => res.json())
-      .then(data => {
-        sessionStorage.setItem('shrambleToken', data['token'])
+    makePostRequest("/room", { room: { player_name: name }}, (data) => {
+      sessionStorage.setItem('shrambleToken', data['token'])
 
-        setJoin({
-          owner: data['owner'],
-          redirect: true
-        })
+      setJoin({
+        owner: data['owner'],
+        redirect: true
       })
-      .catch((error) => console.log(error))
+    })
   }
 
   function handleJoinRoom(e) {
-    fetch("http://localhost:4000/join", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      },
-      body: JSON.stringify({
-        room: {
-          player_name: name,
-          room_code: roomCode
-        }
-      })
-    }).then((res) => res.json())
-      .then(data => {
-        if ('token' in data) {
-          sessionStorage.setItem('shrambleToken', data['token'])
-        }
+    makePostRequest("/join", {
+      room: {
+        player_name: name,
+        room_code: roomCode
+      }
+    }, (data) => {
+      if ('token' in data) {
+        sessionStorage.setItem('shrambleToken', data['token'])
+      }
 
-        setJoin({
-          owner: data['owner'],
-          redirect: true,
-        })
+      setJoin({
+        owner: data['owner'],
+        redirect: true,
       })
-      .catch((error) => console.log(error))
+    })
   }
 
   useEffect(() => {
