@@ -1,61 +1,33 @@
 import React, { useEffect, useState } from 'react';
 
+import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
+
 export default function Betting({ owner, changeStage }) {
   const [contestantList, setContestantList] = useState([{ id: '', name: '' }])
   const [matchId, setMatchId] = useState(null)
 
   useEffect(() => {
-    fetch("http://localhost:4000/contestant", {
-      method: "GET",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      }
-    }).then((res) => res.json())
-      .then(data => {
-        setContestantList(data['contestants']);
-        setMatchId(data['match_id'])
-      })
-      .catch((error) => console.log(error));
+    makeGetRequest("/contestant", (data) => {
+      setContestantList(data['contestants']);
+      setMatchId(data['match_id'])
+    })
   }, [])
 
   function handleContestantSelection(e) {
-    fetch("http://localhost:4000/result", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      },
-      body: JSON.stringify({
-        result: {
-          match_id: matchId,
-          contestant_id: e.target.value
-        }
-      })
-    }).then((res) => res.json())
-      .then(data => {
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
+    makePostRequest("/result", {
+      result: {
+        match_id: matchId,
+        contestant_id: e.target.value
+      }
+    }, (data) => {
+      console.log(data);
+    })
   }
 
   function handleBeginMatch(e) {
-    fetch("http://localhost:4000/start", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
-      },
-      body: JSON.stringify({
-        result: {
-          match_id: matchId
-        }
-      })
-    }).then((res) => res.json())
-      .then(data => {
-        changeStage(data['next_stage'])
-      })
-      .catch((error) => console.log(error));
+    makePostRequest("/start", { result: { match_id: matchId }}, (data) => {
+      changeStage(data['next_stage'])
+    })
   }
 
   return (
