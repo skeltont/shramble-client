@@ -6,8 +6,6 @@ import {
   Route,
 } from "react-router-dom";
 
-import './style/index.css';
-
 import App from './components/App';
 import Home from './routes/home'
 import Match from './routes/match'

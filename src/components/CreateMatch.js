@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import '../style/CreateMatch.css';
+import '../style/CreateMatch.scss';
 
 import { makePostRequest } from '../hooks/makeRequest';
 

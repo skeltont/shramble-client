@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { Helmet } from 'react-helmet'
 
-import '../style/App.css';
+import '../style/App.scss';
 
 import { Outlet } from 'react-router-dom'
 
