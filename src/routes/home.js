@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-import '../style/Home.css';
+import '../style/Home.scss';
 
 import { makePostRequest } from '../hooks/makeRequest';
 
