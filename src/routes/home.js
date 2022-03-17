@@ -62,16 +62,27 @@ export default function Home() {
 
   return (
     <div className="Home body">
-      <div className='row'>
-        <div>
-          <input type="text" className="input-text" placeholder='Who are you' value={name} onChange={handleNameChange} />
+      <div className="form">
+        <div className="row">
+          <div className="input-group">
+            <label htmlFor="name">Name </label>
+            <input id="name" type="text" placeholder='Who are you' value={name} onChange={handleNameChange} />
+          </div>
+        </div>
+        <div className='row extra-space'>
+          <div className="input-group">
+            <label htmlFor="roomcode">Room Code </label>
+            <div className="flex-row">
+              <input id="roomcode" disabled={!name} type="text" className="button-right" placeholder='Enter room code' value={roomCode} onChange={handleCodeChange} />
+              <button disabled={!name || roomCode.length != 8} className='input-left button small' onClick={handleJoinRoom}>Join</button>
+            </div>
+          </div>
+        </div>
+        <div className="row body">
+          <div>- OR -</div>
         </div>
         <div className='row'>
-          <input type="text" className="input-text" placeholder='Enter room code' value={roomCode} onChange={handleCodeChange} />
-          <button className='button-small' onClick={handleJoinRoom}>+</button>
-        </div>
-        <div className='row'>
-          <button className="button-wide" onClick={handleCreateRoom}>Create new room</button>
+          <button disabled={!name} className="button" onClick={handleCreateRoom}>Create new room</button>
         </div>
       </div>
     </div>
