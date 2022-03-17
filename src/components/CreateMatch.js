@@ -42,27 +42,39 @@ export default function CreateMatch({owner, changeStage}) {
 
   if (owner) {
     return (
-      <div className='CreateMatch row'>
-        <div>
-          <input name="stake" type="number" className='input-number' placeholder='Set Stake' value={stake} onChange={handleStakeChange} />
+      <div className='CreateMatch form'>
+        <div className="row mg-top-10">
+          <div className="input-group">
+            <label>Stake</label>
+            <input name="stake" type="number" className='input-number' placeholder='Set Stake' value={stake} onChange={handleStakeChange} />
+          </div>
+        </div>
+        <div className="row extra-space">
+          <div className="input-group">
+            <label className="mg-top-10">Contestants</label>
+          </div>
         </div>
         <div className='contestants'>
           {contestantList.map((x, i) => {
             return (
               <div className='row' key={i}>
-                <input type="text" name="name" className='input-text' placeholder='Name' value={x.name} onChange={e => handleContestantNameChange(e, i)}/>
-                { contestantList.length !== 1 &&
-                  <button className='button-small' onClick={handleRemoveContestant}>-</button>
-                }
+                <div className="input-group">
+                  <div className="flex-row">
+                    <input type="text" name="name" className={`${contestantList.length !== 1 ? 'button-right' : ''}`} placeholder='Name' value={x.name} onChange={e => handleContestantNameChange(e, i)}/>
+                    { contestantList.length !== 1 &&
+                      <button className='button extra-small input-left' onClick={handleRemoveContestant}>-</button>
+                    }
+                  </div>
+                </div>
               </div>
             )
           })}
         </div>
         <div className='row'>
-          <button className='button-wide' onClick={handleAddContestant}>Add another contestant</button>
+          <button className='button wide' onClick={handleAddContestant}>Add another contestant</button>
         </div>
-        <div className='row'>
-          <button className='button-wide' onClick={handleStartMatch}>Open bets</button>
+        <div className='row extra-space'>
+          <button disabled={!stake} className='button wide' onClick={handleStartMatch}>Open bets</button>
         </div>
       </div>
     )

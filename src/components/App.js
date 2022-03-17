@@ -17,7 +17,7 @@ class App extends Component {
         </Helmet>
         <header className="App-header">
           {/* Put Menu icon here */}
-          <div>-</div>
+          {/* <div>-</div> */}
           <div className="title">
             Shramble
           </div>

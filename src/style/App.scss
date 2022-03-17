@@ -11,6 +11,9 @@ body {
   height: 100vh;
   width: 100vw;
 }
+h2 {
+  font-weight: 400;
+}
 .flex-row {
   display: flex;
 }
@@ -71,7 +74,7 @@ input {
   display: flex;
   justify-content: center;
   color: white;
-  background: #4F5F74;
+  background: #33445c;
   height: 50px;
   width: 100%;
 
@@ -98,6 +101,11 @@ input {
   padding: 20px;
   color: white;
   background-color: #233349;
+  overflow: auto;
+}
+
+.mg-top-10 {
+  margin-top: 10px;
 }
 
 .form {
@@ -116,7 +124,7 @@ input {
   justify-content: space-between;
 
   &.extra-space {
-    margin-top: 60px !important;
+    margin-top: 50px !important;
   }
 }
 
@@ -126,16 +134,9 @@ input {
   justify-content: center;
   flex-direction: column;
 }
-.input-number {
-  width: 100%;
-  border-radius: 5px;
-  padding: 20px 10px;
-  margin-top: 20px;
-  font-size: 24px;
-  line-height: 28px;
-}
 
 .button {
+  user-select: none;
   min-width: 60px;
   background: #66FCF1;
   border-radius: 3px;
@@ -159,6 +160,9 @@ input {
 
   &.small {
     max-width: 100px;
+  }
+  &.extra-small {
+    max-width: 60px;
   }
   &.input-left {
     border-top-left-radius: 0px;
