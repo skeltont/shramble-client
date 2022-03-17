@@ -13,7 +13,7 @@ export default function CreateMatch({owner, changeStage}) {
   }
 
   function handleContestantNameChange(e, i) {
-    const {name, value } = e.target;
+    const { name, value } = e.target;
     const list = [...contestantList];
     list[i][name] = value;
     setContestantList(list);
@@ -38,6 +38,13 @@ export default function CreateMatch({owner, changeStage}) {
     }, (data) => {
       changeStage(data['next_stage'])
     })
+  }
+
+  /**
+   * Checks to see if the contestant list has at least one valid entry
+   */
+  function checkContestantListLength() {
+    return contestantList.length && contestantList[0].name.length ? true : false
   }
 
   if (owner) {
@@ -74,7 +81,7 @@ export default function CreateMatch({owner, changeStage}) {
           <button className='button wide' onClick={handleAddContestant}>Add another contestant</button>
         </div>
         <div className='row extra-space'>
-          <button disabled={!stake} className='button wide' onClick={handleStartMatch}>Open bets</button>
+          <button disabled={!stake || !checkContestantListLength()} className='button wide' onClick={handleStartMatch}>Open bets</button>
         </div>
       </div>
     )
