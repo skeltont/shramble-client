@@ -78,8 +78,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="row body">
-          <div>- OR -</div>
+        <div className="row body or mg-top-10 mg-bottom-10">
+          <div>OR</div>
         </div>
         <div className='row'>
           <button disabled={!name} className="button" onClick={handleCreateRoom}>Create new room</button>
