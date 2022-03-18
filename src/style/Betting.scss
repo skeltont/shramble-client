@@ -1,0 +1,20 @@
+.contestant-row {
+    display: flex;
+
+    & > .button {
+        width: 100%;
+        // background-image: linear-gradient(left, red, red 70%, transparent 70%, transparent 100%);
+        // background-image: -webkit-linear-gradient(left, red, red 70%, transparent 70%, transparent 100%);
+    
+        // &:first-child {
+        //     border-top: 1px solid red;
+        // }
+        // &:not(:first-child) {
+        //     border-bottom: 1px solid red; 
+        // }
+    }
+}
+
+.Betting {
+    width: 100%;
+}

@@ -74,7 +74,7 @@ export default function Home() {
             <label htmlFor="roomcode">Room Code </label>
             <div className="flex-row">
               <input id="roomcode" disabled={!name} type="text" className="button-right" placeholder='Enter room code' value={roomCode} onChange={handleCodeChange} />
-              <button disabled={!name || roomCode.length != 8} className='input-left button small' onClick={handleJoinRoom}>Join</button>
+              <button disabled={!name || roomCode.length !== 8} className='input-left button small' onClick={handleJoinRoom}>Join</button>
             </div>
           </div>
         </div>
