@@ -76,7 +76,7 @@ export default function CreateMatch({owner, changeStage}) {
                     { contestants.length !== 1 &&
                       <Button 
                         text="-" 
-                        className='button extra-small input-left' 
+                        className='extra-small input-left' 
                         onClick={handleRemoveContestant} 
                       />
                     }
@@ -89,14 +89,14 @@ export default function CreateMatch({owner, changeStage}) {
         <div className='row'>
           <Button 
             text="Add another contestant"
-            className='button wide'
+            className='wide'
             onClick={handleAddContestant}
           />
         </div>
         <div className='row extra-space'>
           <Button
             text="Open bets"
-            className='button wide'
+            className='wide'
             onClick={handleStartMatch}
             disabled={!stake || !checkContestantsLength()}
           />

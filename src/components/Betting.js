@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import '../style/Betting.scss';
+import Button from '../components/common/Button.js'
 
 import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
 
@@ -62,9 +63,13 @@ export default function Betting({ owner, changeStage }) {
   function ContestantList(props) {
     const listItems = props.contestants.map((contestant) => 
       <div className="contestant-row row" key={contestant.id}>
-        <button className={`button input-right ${contestant.id === selectedContestant ? 'selected' : ''}`} style={setContestantButtonStyle(contestant)} value={contestant.id} onClick={handleContestantSelection}>
-          <span className="text">{contestant.name}</span>
-        </button>
+        <Button 
+          text={contestant.name}
+          className={`input-right ${contestant.id === selectedContestant ? 'selected' : ''}`} 
+          style={setContestantButtonStyle(contestant)} 
+          value={contestant.id} 
+          onClick={handleContestantSelection}
+        />
       </div>
     )
 
@@ -73,7 +78,6 @@ export default function Betting({ owner, changeStage }) {
 
   return (
     <div className='Betting form'>
-      {/* <h1>Select a Contestant!</h1> */}
       <div className="row mg-top-10">
         <div className="input-group">
           <label>Select a Contestant</label>
@@ -82,9 +86,11 @@ export default function Betting({ owner, changeStage }) {
       <ContestantList contestants={contestantList} />
       {owner &&
         <div className='row extra-space'>
-          <button className='button primary' onClick={handleBeginMatch}>
-            <span className="text">Begin Match</span>
-          </button>
+          <Button 
+            text="Begin Match"
+            className='primary' 
+            onClick={handleBeginMatch}
+          />
         </div>
       }
     </div>
