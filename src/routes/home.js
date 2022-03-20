@@ -17,38 +17,49 @@ export default function Home() {
 
   const navigate = useNavigate();
 
-  function handleNameChange(e) {
-    setName(e.target.value)
+  function handleNameChange(e) { 
+    setName(e.target.value) 
   }
-
-  function handleCodeChange(e) {
-    setRoomCode(e.target.value)
+  
+  function handleCodeChange(e) { 
+    setRoomCode(e.target.value) 
   }
 
   async function handleCreateRoom(e) {
+    // TODO Figure out way to not manually toggle loading state
     setLoading('creatingNewRoom')
-    let response = await makePostRequest("/room", { room: { player_name: name } })
-
-    console.log(response)
-    sessionStorage.setItem('shrambleToken', response.data['token'])
-    setJoin({
-      owner: response.data['owner'],
-      redirect: true 
+    let response = await makePostRequest("/room", {
+      room: {
+        player_name: name
+      } 
     })
+    setLoading('')
+
+    if (response.ok) {
+      sessionStorage.setItem('shrambleToken', response.data['token'])
+      setJoin({
+        owner: response.data['owner'],
+        redirect: true 
+      })
+    } else {
+      // handle error
+    }
   }
 
   function handleJoinRoom(e) {
     setLoading('joiningRoom')
-    let data = makePostRequest("/join", {
+    let response = makePostRequest("/join", {
       room: {
         player_name: name,
         room_code: roomCode
       }
     })
-    if ('token' in data) {
-      sessionStorage.setItem('shrambleToken', data['token'])
+    setLoading('')
+
+    if (response.ok && 'token' in response.data) {
+      sessionStorage.setItem('shrambleToken', response.data['token'])
       setJoin({
-        owner: data['owner'],
+        owner: response.data['owner'],
         redirect: true,
       })
     } else {
