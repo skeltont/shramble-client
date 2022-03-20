@@ -26,7 +26,7 @@ export default function Match() {
     const response = await makeGetRequest("/room")
 
     if (response.ok) {
-      const data = response.data
+      const { data } = response
 
       if (data['stage'] !== stage) {
         setStage(data['stage'])

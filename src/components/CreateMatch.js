@@ -6,7 +6,7 @@ import { makePostRequest } from '../hooks/makeRequest';
 
 export default function CreateMatch({owner, changeStage}) {
   const [stake, setStake] = useState('')
-  const [contestantList, setContestantList] = useState([{ name: '' }])
+  const [contestants, setContestants] = useState([{ name: '' }])
 
   function handleStakeChange(e) {
     setStake(e.target.value);
@@ -14,37 +14,41 @@ export default function CreateMatch({owner, changeStage}) {
 
   function handleContestantNameChange(e, i) {
     const { name, value } = e.target;
-    const list = [...contestantList];
+    const list = [...contestants];
+
     list[i][name] = value;
-    setContestantList(list);
+    setContestants(list);
   }
 
   function handleAddContestant(e) {
-    setContestantList([...contestantList, { name: '' }]);
+    setContestants([...contestants, { name: '' }]);
   }
 
   function handleRemoveContestant(e, i) {
-    const list = [...contestantList];
+    const list = [...contestants];
+
     list.splice(i, 1)
-    setContestantList(list)
+    setContestants(list)
   }
 
-  function handleStartMatch(e) {
-    makePostRequest("/match", {
-      match: {
-        stake: stake,
-        contestants: contestantList
-      }
-    }, (data) => {
-      changeStage(data['next_stage'])
+  async function handleStartMatch(e) {
+    const response = await makePostRequest("/match", {
+      match: { stake, contestants }
     })
+    console.log(response)
+
+    if (response.ok) {
+      changeStage(response.data['next_stage'])
+    } else {
+      // TODO Handle Error
+    }
   }
 
   /**
    * Checks to see if the contestant list has at least one valid entry
    */
-  function checkContestantListLength() {
-    return contestantList.length && contestantList[0].name.length ? true : false
+  function checkContestantsLength() {
+    return (contestants.length && contestants[0].name.length) || false
   }
 
   if (owner) {
@@ -62,13 +66,13 @@ export default function CreateMatch({owner, changeStage}) {
           </div>
         </div>
         <div className='contestants'>
-          {contestantList.map((x, i) => {
+          {contestants.map((x, i) => {
             return (
               <div className='row' key={i}>
                 <div className="input-group">
                   <div className="flex-row">
-                    <input type="text" name="name" className={`${contestantList.length !== 1 ? 'button-right' : ''}`} placeholder='Name' value={x.name} onChange={e => handleContestantNameChange(e, i)}/>
-                    { contestantList.length !== 1 &&
+                    <input type="text" name="name" className={`${contestants.length !== 1 ? 'button-right' : ''}`} placeholder='Name' value={x.name} onChange={e => handleContestantNameChange(e, i)}/>
+                    { contestants.length !== 1 &&
                       <button className='button extra-small input-left' onClick={handleRemoveContestant}>-</button>
                     }
                   </div>
@@ -81,7 +85,7 @@ export default function CreateMatch({owner, changeStage}) {
           <button className='button wide' onClick={handleAddContestant}>Add another contestant</button>
         </div>
         <div className='row extra-space'>
-          <button disabled={!stake || !checkContestantListLength()} className='button wide' onClick={handleStartMatch}>Open bets</button>
+          <button disabled={!stake || !checkContestantsLength()} className='button wide' onClick={handleStartMatch}>Open bets</button>
         </div>
       </div>
     )

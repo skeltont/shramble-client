@@ -2,7 +2,7 @@ const WEBAPP_URL = "http://localhost:4000";
 
 export async function makePostRequest(path, body) {
   try {
-    let request = await fetch(WEBAPP_URL + path, {
+    const request = await fetch(WEBAPP_URL + path, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -17,6 +17,7 @@ export async function makePostRequest(path, body) {
       data: await request.json()
     }
   } catch (error) {
+    // TODO This should only handle actual errors not 400/500 responses
     console.error(error)
 
     return error
@@ -25,7 +26,7 @@ export async function makePostRequest(path, body) {
 
 export async function makeGetRequest(path) {
   try {
-    let request = await fetch(WEBAPP_URL + path, {
+    const request = await fetch(WEBAPP_URL + path, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -39,6 +40,7 @@ export async function makeGetRequest(path) {
       data: await request.json()
     }
   } catch (error) {
+    // TODO This should only handle actual errors not 400/500 responses
     console.error(error)
 
     return error

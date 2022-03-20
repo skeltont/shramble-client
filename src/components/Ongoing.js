@@ -8,23 +8,31 @@ export default function Ongoing({ owner, changeStage }) {
   const [matchId, setMatchId] = useState(null)
   const [winner, setWinner] = useState(null)
 
-  useEffect(() => {
-    makeGetRequest("/result", (data) => {
-      setResults(data['results']);
-      setContestantList(data['contestants'])
-      setMatchId(data['match_id'])
-    })
+  useEffect(async () => {
+    const response = await makeGetRequest("/result")
+
+    if (response.ok) {
+      setResults(response.data['results']);
+      setContestantList(response.data['contestants'])
+      setMatchId(response.data['match_id'])
+    } else {
+      // TODO handle error
+    }
   }, [])
 
-  function handleEndMatch(e) {
-    makePostRequest("/end", {
+  async function handleEndMatch(e) {
+    const response = await makePostRequest("/end", {
       match: {
         contestant_id: winner,
         match_id: matchId
       }
-    }, (data) => {
-      changeStage(data['next_stage'])
     })
+
+    if (response.ok) {
+      changeStage(response.data['next_stage'])
+    } else {
+      // TODO handle error
+    }
   }
 
   function handleWinnerSelection(e) {

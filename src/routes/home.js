@@ -28,7 +28,7 @@ export default function Home() {
   async function handleCreateRoom(e) {
     // TODO Figure out way to not manually toggle loading state
     setLoading('creatingNewRoom')
-    let response = await makePostRequest("/room", {
+    const response = await makePostRequest("/room", {
       room: {
         player_name: name
       } 
@@ -42,13 +42,13 @@ export default function Home() {
         redirect: true 
       })
     } else {
-      // handle error
+      // TODO handle error
     }
   }
 
-  function handleJoinRoom(e) {
+  async function handleJoinRoom(e) {
     setLoading('joiningRoom')
-    let response = makePostRequest("/join", {
+    const response = await makePostRequest("/join", {
       room: {
         player_name: name,
         room_code: roomCode
@@ -63,7 +63,7 @@ export default function Home() {
         redirect: true,
       })
     } else {
-      // handle error
+      // TODO handle error
     }
     setLoading('')
   }
