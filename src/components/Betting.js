@@ -9,37 +9,46 @@ export default function Betting({ owner, changeStage }) {
   const [matchId, setMatchId] = useState(null)
   const [selectedContestant, setSelectedContestant] = useState(null)
 
-  useEffect(() => {
-    makeGetRequest("/contestant", (data) => {
-      setContestantList(data['contestants']);
-      setMatchId(data['match_id'])
-    })
+  useEffect(async () => {
+    const response = await makeGetRequest("/contestant")
+
+    if (response.ok) {
+      setContestantList(response.data['contestants']);
+      setMatchId(response.data['match_id']);
+    } else {
+      // TODO handle error
+    }
   }, [])
 
-  function handleContestantSelection(e) {
+  async function handleContestantSelection(e) {
     // TODO Need error handling
     e.target.closest('button').classList.toggle('loading');
 
-    makePostRequest("/result", {
+    const response = await makePostRequest("/result", {
       result: {
         match_id: matchId,
         contestant_id: e.target.value
       }
-    }, (data) => {
-      // Simulating load time just to show loading state
-      setTimeout(() => {
-        setSelectedContestant(e.target.value);
-      }, 1000);
-      console.log(data);
     })
+    // Simulating load time just to show loading state
+    setTimeout(() => {
+      setSelectedContestant(e.target.value);
+    }, 1000);
   }
 
-  function handleBeginMatch(e) {
+  async function handleBeginMatch(e) {
     e.target.closest('button').classList.toggle('loading');
 
-    makePostRequest("/start", { result: { match_id: matchId }}, (data) => {
-      changeStage(data['next_stage']);
+    const response = await makePostRequest("/start", { 
+      result: { 
+        match_id: matchId 
+      }
     })
+    if (response.ok) {
+      changeStage(response.data['next_stage']);
+    } else {
+      // TODO handle error
+    }
   }
 
   function setContestantButtonStyle(contestant) {
@@ -55,7 +64,6 @@ export default function Betting({ owner, changeStage }) {
       <div className="contestant-row row" key={contestant.id}>
         <button className={`button input-right ${contestant.id === selectedContestant ? 'selected' : ''}`} style={setContestantButtonStyle(contestant)} value={contestant.id} onClick={handleContestantSelection}>
           <span className="text">{contestant.name}</span>
-          
         </button>
       </div>
     )

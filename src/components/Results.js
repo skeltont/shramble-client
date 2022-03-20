@@ -5,10 +5,14 @@ import { makeGetRequest } from '../hooks/makeRequest';
 export default function Results({ owner, changeStage }) {
   const [standings, setStandings] = useState([{ name: '', winnings: 0.0 }])
 
-  useEffect(() => {
-    makeGetRequest("/standings", (data) => {
-      setStandings(data['standings']);
-    })
+  useEffect(async () => {
+    const response = await makeGetRequest("/standings")
+
+    if (response.ok) {
+      setStandings(response.data['standings']);
+    } else {
+      // TODO handle error
+    }
   }, [])
 
   function handleNewMatch(e) {

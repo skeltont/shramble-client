@@ -22,15 +22,19 @@ export default function Match() {
     setStage(newStage)
   }
 
-  function checkStage() {
-    makeGetRequest("/room", (data) => {
+  async function checkStage() {
+    const response = await makeGetRequest("/room")
+
+    if (response.ok) {
+      const { data } = response
+
       if (data['stage'] !== stage) {
         setStage(data['stage'])
       }
       if (data['room_code'] !== roomCode) {
         setRoomCode(data['room_code'])
       }
-    })
+    }
   }
 
   useInterval(async () => {
