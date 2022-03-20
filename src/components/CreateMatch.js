@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import '../style/CreateMatch.scss';
+import Button from '../components/common/Button.js'
 
 import { makePostRequest } from '../hooks/makeRequest';
 
@@ -73,7 +74,11 @@ export default function CreateMatch({owner, changeStage}) {
                   <div className="flex-row">
                     <input type="text" name="name" className={`${contestants.length !== 1 ? 'button-right' : ''}`} placeholder='Name' value={x.name} onChange={e => handleContestantNameChange(e, i)}/>
                     { contestants.length !== 1 &&
-                      <button className='button extra-small input-left' onClick={handleRemoveContestant}>-</button>
+                      <Button 
+                        text="-" 
+                        className='extra-small input-left' 
+                        onClick={handleRemoveContestant} 
+                      />
                     }
                   </div>
                 </div>
@@ -82,10 +87,19 @@ export default function CreateMatch({owner, changeStage}) {
           })}
         </div>
         <div className='row'>
-          <button className='button wide' onClick={handleAddContestant}>Add another contestant</button>
+          <Button 
+            text="Add another contestant"
+            className='wide'
+            onClick={handleAddContestant}
+          />
         </div>
         <div className='row extra-space'>
-          <button disabled={!stake || !checkContestantsLength()} className='button wide' onClick={handleStartMatch}>Open bets</button>
+          <Button
+            text="Open bets"
+            className='wide'
+            onClick={handleStartMatch}
+            disabled={!stake || !checkContestantsLength()}
+          />
         </div>
       </div>
     )
