@@ -14,7 +14,6 @@ export default function Button({
 
   function generateStyle() {
     let style = Object.assign({}, styleOverwrite)
-    console.log(children)
 
     if (percent) style = Object.assign(generatePercentBar(), styleOverwrite)
 
