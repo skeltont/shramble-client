@@ -1,5 +1,6 @@
+// export default function Button(props) {
 export default function Button({
-  text, 
+  text=false, 
   value, 
   className='', 
   onClick, 
@@ -7,11 +8,13 @@ export default function Button({
   loading=false, 
   percent=false, 
   styleOverwrite={},
-  percentBarColor='teal'
+  percentBarColor='teal',
+  children
 }) {
 
   function generateStyle() {
     let style = Object.assign({}, styleOverwrite)
+    console.log(children)
 
     if (percent) style = Object.assign(generatePercentBar(), styleOverwrite)
 
@@ -37,7 +40,7 @@ export default function Button({
       onClick={onClick}
       disabled={disabled}
     >
-      <span className="text">{text}</span>
+      <span className="text">{text ? text : children}</span>
     </button>
   )
 }
