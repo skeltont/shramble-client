@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import '../style/Home.scss';
+import Button from '../components/common/Button.js'
 
 import { makePostRequest } from '../hooks/makeRequest';
 
@@ -12,6 +13,7 @@ export default function Home() {
     owner: false,
     redirect: false
   })
+  const [loading, setLoading] = useState('');
 
   const navigate = useNavigate();
 
@@ -23,33 +25,36 @@ export default function Home() {
     setRoomCode(e.target.value)
   }
 
-  function handleCreateRoom(e) {
-    makePostRequest("/room", { room: { player_name: name }}, (data) => {
-      sessionStorage.setItem('shrambleToken', data['token'])
+  async function handleCreateRoom(e) {
+    setLoading('creatingNewRoom')
+    let response = await makePostRequest("/room", { room: { player_name: name } })
 
-      setJoin({
-        owner: data['owner'],
-        redirect: true
-      })
+    console.log(response)
+    sessionStorage.setItem('shrambleToken', response.data['token'])
+    setJoin({
+      owner: response.data['owner'],
+      redirect: true 
     })
   }
 
   function handleJoinRoom(e) {
-    makePostRequest("/join", {
+    setLoading('joiningRoom')
+    let data = makePostRequest("/join", {
       room: {
         player_name: name,
         room_code: roomCode
       }
-    }, (data) => {
-      if ('token' in data) {
-        sessionStorage.setItem('shrambleToken', data['token'])
-      }
-
+    })
+    if ('token' in data) {
+      sessionStorage.setItem('shrambleToken', data['token'])
       setJoin({
         owner: data['owner'],
         redirect: true,
       })
-    })
+    } else {
+      // handle error
+    }
+    setLoading('')
   }
 
   useEffect(() => {
@@ -74,7 +79,13 @@ export default function Home() {
             <label htmlFor="roomcode">Room Code </label>
             <div className="flex-row">
               <input id="roomcode" disabled={!name} type="text" className="button-right" placeholder='Enter room code' value={roomCode} onChange={handleCodeChange} />
-              <button disabled={!name || roomCode.length !== 8} className='input-left button small' onClick={handleJoinRoom}>Join</button>
+              <Button 
+                text='Join' 
+                onClick={handleJoinRoom}
+                className='input-left small' 
+                disabled={!name || roomCode.length !== 8 || loading !== ''} 
+                loading={loading === 'joiningRoom'} 
+              />
             </div>
           </div>
         </div>
@@ -82,7 +93,12 @@ export default function Home() {
           <div>OR</div>
         </div>
         <div className='row'>
-          <button disabled={!name} className="button" onClick={handleCreateRoom}>Create new room</button>
+          <Button 
+            text="Create new room"
+            onClick={handleCreateRoom}
+            disabled={!name || loading !== ''} 
+            loading={loading === 'creatingNewRoom'}
+          />
         </div>
       </div>
     </div>
