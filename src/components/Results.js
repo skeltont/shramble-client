@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { makeGetRequest } from '../hooks/makeRequest';
+import Button from '../components/common/Button.js'
 
 export default function Results({ owner, changeStage }) {
   const [standings, setStandings] = useState([{ name: '', winnings: 0.0 }])
@@ -21,7 +22,7 @@ export default function Results({ owner, changeStage }) {
 
   return (
     <div className='Results'>
-      <div className='Ongoing'>
+      <div className='Ongoing form'>
         <h1>Standings</h1>
         <div className='standings'>
           <table>
@@ -45,7 +46,11 @@ export default function Results({ owner, changeStage }) {
         </div>
         {owner &&
           <div className='row'>
-            <button className='button-wide' onClick={handleNewMatch}>End Match</button>
+            <Button 
+              text="End Match"
+              className='wide primary'
+              onClick={handleNewMatch}
+            />
           </div>
         }
       </div>
