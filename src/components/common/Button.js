@@ -9,9 +9,6 @@ export default function Button({
   styleOverwrite={},
   percentBarColor='teal'
 }) {
-  // function onClick() {
-  //   onClick()
-  // }
 
   function generateStyle() {
     let style = Object.assign({}, styleOverwrite)
