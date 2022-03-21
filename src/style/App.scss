@@ -190,7 +190,7 @@ input {
     background: #526279;
     color: white;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background: #6c7a8f;
     }
   }

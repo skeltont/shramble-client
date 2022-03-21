@@ -76,8 +76,9 @@ export default function CreateMatch({owner, changeStage}) {
                     { contestants.length !== 1 &&
                       <Button 
                         text="-" 
+                        value={i}
                         className='extra-small input-left' 
-                        onClick={handleRemoveContestant} 
+                        onClick={e => { handleRemoveContestant(e, i) }} 
                       />
                     }
                   </div>
