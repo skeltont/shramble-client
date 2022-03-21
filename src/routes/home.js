@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import '../style/Home.scss';
-import Button from '../components/common/Button.js'
+import Button from '../components/common/Button.tsx'
 
 import { makePostRequest } from '../hooks/makeRequest';
 

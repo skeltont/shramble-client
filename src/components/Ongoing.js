@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
-import Button from '../components/common/Button.js'
+import Button from '../components/common/Button.tsx'
 
 export default function Ongoing({ owner, changeStage }) {
   const [results, setResults] = useState([{name: '', contestant: ''}])
