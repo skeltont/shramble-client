@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import '../style/CreateMatch.scss';
-import Button from '../components/common/Button.js'
+import Button from '../components/common/Button.tsx'
 
 import { makePostRequest } from '../hooks/makeRequest';
 

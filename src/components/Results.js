@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { makeGetRequest } from '../hooks/makeRequest';
-import Button from '../components/common/Button.js'
+import Button from '../components/common/Button.tsx'
 
 export default function Results({ owner, changeStage }) {
   const [standings, setStandings] = useState([{ name: '', winnings: 0.0 }])

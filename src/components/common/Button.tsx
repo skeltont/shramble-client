@@ -1,6 +1,21 @@
+import { FC } from 'react';
+
+interface ButtonProps {
+  text?: string,
+  value?: string,
+  className?: string,
+  onClick: (e: object) => void,
+  disabled?: boolean,
+  loading?: boolean,
+  percent?: boolean,
+  styleOverwrite?: object,
+  percentBarColor?: string,
+  children?: FC
+}
+
 export default function Button({
-  text=false, 
-  value, 
+  text='', 
+  value='', 
   className='', 
   onClick, 
   disabled=false,
@@ -9,8 +24,8 @@ export default function Button({
   styleOverwrite={},
   percentBarColor='teal',
   children
-}) {
-
+} : ButtonProps) {
+  
   function generateStyle() {
     let style = Object.assign({}, styleOverwrite)
 

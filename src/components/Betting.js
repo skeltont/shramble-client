@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import '../style/Betting.scss';
-import Button from '../components/common/Button.js'
+import Button from '../components/common/Button.tsx'
 
 import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
 
