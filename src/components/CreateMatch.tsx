@@ -1,42 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import '../style/CreateMatch.scss';
-import Button from '../components/common/Button.tsx'
+import '../style/CreateMatch.scss'
 
-import { makePostRequest } from '../hooks/makeRequest';
+import Button from './common/Button.tsx'
+import { makePostRequest } from '../hooks/makeRequest'
 
-export default function CreateMatch({owner, changeStage}) {
+interface CreateMatchProps {
+  owner: boolean,
+  changeStage: (newStage: string) => void,
+}
+
+interface Contestant {
+  name: string
+}
+interface Contestants extends Array<Contestant>{}
+
+export default function CreateMatch({owner, changeStage} : CreateMatchProps) {
   const [stake, setStake] = useState('')
-  const [contestants, setContestants] = useState([{ name: '' }])
+  const [contestants, setContestants] = useState<Contestants>([{ name: ''}])
 
-  function handleStakeChange(e) {
-    setStake(e.target.value);
+  function handleStakeChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setStake(e.target.value)
   }
 
-  function handleContestantNameChange(e, i) {
-    const { name, value } = e.target;
-    const list = [...contestants];
+  function handleContestantNameChange(e: React.ChangeEvent<HTMLInputElement>, i: number) {
+    const { name, value } = e.target
+    const list = [...contestants]
 
-    list[i][name] = value;
-    setContestants(list);
+    list[i][name] = value
+
+    setContestants(list)
   }
 
-  function handleAddContestant(e) {
-    setContestants([...contestants, { name: '' }]);
+  function handleAddContestant() {
+    setContestants([...contestants, { name: '' }])
   }
 
-  function handleRemoveContestant(e, i) {
-    const list = [...contestants];
+  function handleRemoveContestant(i: number) {
+    const list = [...contestants]
 
     list.splice(i, 1)
     setContestants(list)
   }
 
-  async function handleStartMatch(e) {
+  async function handleStartMatch() {
     const response = await makePostRequest("/match", {
       match: { stake, contestants }
     })
-    console.log(response)
 
     if (response.ok) {
       changeStage(response.data['next_stage'])
@@ -48,8 +58,8 @@ export default function CreateMatch({owner, changeStage}) {
   /**
    * Checks to see if the contestant list has at least one valid entry
    */
-  function checkContestantsLength() {
-    return (contestants.length && contestants[0].name.length) || false
+  function checkContestantsLength(): number {
+    return (contestants.length && contestants[0].name.length) || 0
   }
 
   if (owner) {
@@ -74,11 +84,11 @@ export default function CreateMatch({owner, changeStage}) {
                   <div className="flex-row">
                     <input type="text" name="name" className={`${contestants.length !== 1 ? 'button-right' : ''}`} placeholder='Name' value={x.name} onChange={e => handleContestantNameChange(e, i)}/>
                     { contestants.length !== 1 &&
-                      <Button 
-                        text="-" 
-                        value={i}
-                        className='extra-small input-left' 
-                        onClick={e => { handleRemoveContestant(e, i) }} 
+                      <Button
+                        text="-"
+                        value={String(i)}
+                        className='extra-small input-left'
+                        onClick={() => handleRemoveContestant(i)}
                       />
                     }
                   </div>
@@ -88,7 +98,7 @@ export default function CreateMatch({owner, changeStage}) {
           })}
         </div>
         <div className='row'>
-          <Button 
+          <Button
             text="Add another contestant"
             className='wide'
             onClick={handleAddContestant}

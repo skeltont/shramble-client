@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 
 import { useInterval } from '../hooks/useInterval';
 import { makeGetRequest } from '../hooks/makeRequest';
-import CreateMatch from '../components/CreateMatch';
+import CreateMatch from '../components/CreateMatch.tsx';
 import Betting from '../components/Betting';
 import Ongoing from '../components/Ongoing';
 import Results from '../components/Results';
