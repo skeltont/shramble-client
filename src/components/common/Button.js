@@ -1,4 +1,3 @@
-// export default function Button(props) {
 export default function Button({
   text=false, 
   value, 

@@ -89,7 +89,7 @@ export default function Ongoing({ owner, changeStage }) {
         <div className='row extra-space'>
           <Button
             text="End Match"
-            disabled={disabled()}
+            disabled={disabled() || !winner}
             loading={loading === 'endMatch'}
             className='wide primary' 
             onClick={handleEndMatch}
