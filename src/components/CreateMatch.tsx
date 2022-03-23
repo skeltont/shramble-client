@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import '../style/CreateMatch.scss'
 
-import Button from './common/Button.tsx'
+import Button from './common/Button'
 import { makePostRequest } from '../hooks/makeRequest'
 
 interface CreateMatchProps {
@@ -27,7 +27,7 @@ export default function CreateMatch({owner, changeStage} : CreateMatchProps) {
     const { name, value } = e.target
     const list = [...contestants]
 
-    list[i][name] = value
+    list[i].name = value
 
     setContestants(list)
   }

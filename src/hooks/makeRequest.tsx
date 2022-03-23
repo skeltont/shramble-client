@@ -1,12 +1,21 @@
-const WEBAPP_URL = "http://localhost:4000";
+const WEBAPP_URL = "http://localhost:4000"
 
-export async function makePostRequest(path, body) {
+interface ResponseData {
+  [key: string]: string
+}
+interface Response {
+  status: number,
+  ok: boolean,
+  data: ResponseData
+}
+
+export async function makePostRequest(path: string, body: object): Promise<Response> {
   try {
     const request = await fetch(WEBAPP_URL + path, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
+        'Authorization': sessionStorage.getItem('shrambleToken') || 'undefined'
       },
       body: JSON.stringify(body)
     })
@@ -20,20 +29,24 @@ export async function makePostRequest(path, body) {
     // TODO This should only handle actual errors not 400/500 responses
     console.error(error)
 
-    return error
+    return {
+      status: 500,
+      ok: false,
+      data: {'error': String(error)}
+    }
   }
 }
 
-export async function makeGetRequest(path) {
+export async function makeGetRequest(path: string): Promise<Response> {
   try {
     const request = await fetch(WEBAPP_URL + path, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': sessionStorage.getItem('shrambleToken')
+        'Authorization': sessionStorage.getItem('shrambleToken') || 'undefined'
       }
     })
-    
+
     return {
       status: request.status,
       ok: request.ok,
@@ -43,6 +56,12 @@ export async function makeGetRequest(path) {
     // TODO This should only handle actual errors not 400/500 responses
     console.error(error)
 
-    return error
+    return {
+      status: 500,
+      ok: false,
+      data: { 'error': String(error) }
+    }
   }
 }
+
+
