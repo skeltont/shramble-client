@@ -23,7 +23,7 @@ export default function Betting({ owner, changeStage }) {
 
   async function handleContestantSelection(e) {
     // TODO Need error handling
-    e.target.closest('button').classList.toggle('loading');
+    // e.target.closest('button').classList.toggle('loading');
 
     const response = await makePostRequest("/result", {
       result: {
@@ -31,18 +31,16 @@ export default function Betting({ owner, changeStage }) {
         contestant_id: e.target.value
       }
     })
-    // Simulating load time just to show loading state
-    setTimeout(() => {
-      setSelectedContestant(e.target.value);
-    }, 1000);
+    setSelectedContestant(e.target.value);
+
   }
 
   async function handleBeginMatch(e) {
     e.target.closest('button').classList.toggle('loading');
 
-    const response = await makePostRequest("/start", { 
-      result: { 
-        match_id: matchId 
+    const response = await makePostRequest("/start", {
+      result: {
+        match_id: matchId
       }
     })
     if (response.ok) {
@@ -61,13 +59,13 @@ export default function Betting({ owner, changeStage }) {
   }
 
   function ContestantList(props) {
-    const listItems = props.contestants.map((contestant) => 
+    const listItems = props.contestants.map((contestant) =>
       <div className="contestant-row row" key={contestant.id}>
-        <Button 
+        <Button
           text={contestant.name}
-          className={`input-right ${contestant.id === selectedContestant ? 'selected' : ''}`} 
-          style={setContestantButtonStyle(contestant)} 
-          value={contestant.id} 
+          className={`input-right ${contestant.id === selectedContestant ? 'selected' : ''}`}
+          style={setContestantButtonStyle(contestant)}
+          value={contestant.id}
           onClick={handleContestantSelection}
         />
       </div>
@@ -86,9 +84,9 @@ export default function Betting({ owner, changeStage }) {
       <ContestantList contestants={contestantList} />
       {owner &&
         <div className='row extra-space'>
-          <Button 
+          <Button
             text="Begin Match"
-            className='primary' 
+            className='primary'
             onClick={handleBeginMatch}
           />
         </div>

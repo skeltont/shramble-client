@@ -4,7 +4,7 @@ import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
 import Button from '../components/common/Button.tsx'
 
 export default function Ongoing({ owner, changeStage }) {
-  const [results, setResults] = useState([{name: '', contestant: ''}])
+  const [results, setResults] = useState([{name: '', bet: ''}])
   const [contestantList, setContestantList] = useState([{ id: '', name: '' }])
   const [matchId, setMatchId] = useState(null)
   const [winner, setWinner] = useState(null)
@@ -61,7 +61,7 @@ export default function Ongoing({ owner, changeStage }) {
               return (
                 <tr key={i}>
                   <td>{x.name}</td>
-                  <td>{x.contestant}</td>
+                  <td>{x.bet}</td>
                 </tr>
               )
             })}
@@ -91,7 +91,7 @@ export default function Ongoing({ owner, changeStage }) {
             text="End Match"
             disabled={disabled() || !winner}
             loading={loading === 'endMatch'}
-            className='wide primary' 
+            className='wide primary'
             onClick={handleEndMatch}
           />
         </div>
