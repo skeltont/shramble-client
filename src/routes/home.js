@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+import ReCAPTCHA from "react-google-recaptcha"
 
-import '../style/Home.scss';
+
+import '../style/Home.scss'
 import Button from '../components/common/Button.tsx'
 
-import { makePostRequest } from '../hooks/makeRequest';
+import { makePostRequest } from '../hooks/makeRequest'
 
 export default function Home() {
-  const [name, setName] = useState('');
-  const [roomCode, setRoomCode] = useState('');
+  const [name, setName] = useState('')
+  const [roomCode, setRoomCode] = useState('')
   const [join, setJoin] = useState({
     owner: false,
     redirect: false
   })
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState('')
+  const [recaptchaToken, setRecaptchaToken] = useState('')
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
-  function handleNameChange(e) { 
-    setName(e.target.value) 
+  function handleNameChange(e) {
+    setName(e.target.value)
   }
-  
-  function handleCodeChange(e) { 
-    setRoomCode(e.target.value) 
+
+  function handleCodeChange(e) {
+    setRoomCode(e.target.value)
   }
 
   async function handleCreateRoom(e) {
@@ -30,8 +33,9 @@ export default function Home() {
     setLoading('creatingNewRoom')
     const response = await makePostRequest("/room", {
       room: {
-        player_name: name
-      } 
+        player_name: name,
+        recaptcha_token: recaptchaToken
+      }
     })
     setLoading('')
 
@@ -39,7 +43,7 @@ export default function Home() {
       sessionStorage.setItem('shrambleToken', response.data['token'])
       setJoin({
         owner: response.data['owner'],
-        redirect: true 
+        redirect: true
       })
     } else {
       // TODO handle error
@@ -68,11 +72,15 @@ export default function Home() {
     setLoading('')
   }
 
+  function captchaChange(value) {
+    setRecaptchaToken(value)
+  }
+
   useEffect(() => {
-    const { owner, redirect } = join;
+    const { owner, redirect } = join
 
     if (redirect) {
-      navigate('/match', { state: { owner } });
+      navigate('/match', { state: { owner } })
     }
   })
 
@@ -90,12 +98,12 @@ export default function Home() {
             <label htmlFor="roomcode">Room Code </label>
             <div className="flex-row">
               <input id="roomcode" disabled={!name} type="text" className="button-right" placeholder='Enter room code' value={roomCode} onChange={handleCodeChange} />
-              <Button 
-                text='Join' 
+              <Button
+                text='Join'
                 onClick={handleJoinRoom}
-                className='input-left small' 
-                disabled={!name || roomCode.length !== 8 || loading !== ''} 
-                loading={loading === 'joiningRoom'} 
+                className='input-left small'
+                disabled={!name || roomCode.length !== 8 || loading !== ''}
+                loading={loading === 'joiningRoom'}
               />
             </div>
           </div>
@@ -104,14 +112,19 @@ export default function Home() {
           <div>OR</div>
         </div>
         <div className='row'>
-          <Button 
+          <Button
             text="Create new room"
             onClick={handleCreateRoom}
-            disabled={!name || loading !== ''} 
+            disabled={!name || loading !== ''}
             loading={loading === 'creatingNewRoom'}
           />
         </div>
+        <ReCAPTCHA
+          sitekey={process.env.REACT_APP_RECAPTCHA_CLIENT}
+          onChange={captchaChange}
+          theme='dark'
+        />
       </div>
     </div>
-  );
+  )
 }
