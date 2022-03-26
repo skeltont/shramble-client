@@ -1,4 +1,4 @@
-const WEBAPP_URL = "http://localhost:4000"
+const WEBAPP_URL = "{process.env.REACT_APP_BUTTEND_URL}"
 
 interface ResponseData {
   [key: string]: string
