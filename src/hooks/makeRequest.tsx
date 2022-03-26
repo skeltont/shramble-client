@@ -1,4 +1,4 @@
-const WEBAPP_URL = "{process.env.REACT_APP_BUTTEND_URL}"
+const WEBAPP_URL = process.env.REACT_APP_BUTTEND_URL;
 
 interface ResponseData {
   [key: string]: string
