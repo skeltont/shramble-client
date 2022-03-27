@@ -7,4 +7,10 @@ choose and score / lose **imaginary** points. We do not condone the usage of it 
 and will not implement any features to support something like that.
 
 # Setup
-it's midnight, i'll do this later
+## .env
+
+```
+REACT_APP_BACKEND_URL='http://localhost:4000'
+REACT_APP_RECAPTCHA_CLIENT='...'
+```
+be sure to generate your own (v2) [google recaptcha](https://www.google.com/recaptcha/admin/create)
