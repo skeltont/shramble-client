@@ -55,7 +55,8 @@ export default function Home() {
     const response = await makePostRequest("/join", {
       room: {
         player_name: name,
-        room_code: roomCode
+        room_code: roomCode,
+        recaptcha_token: recaptchaToken
       }
     })
     setLoading('')
