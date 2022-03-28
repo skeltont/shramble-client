@@ -103,7 +103,7 @@ export default function Home() {
                 text='Join'
                 onClick={handleJoinRoom}
                 className='input-left small'
-                disabled={!name || roomCode.length !== 8 || loading !== ''}
+                disabled={!name || roomCode.length !== 8 || !recaptchaToken || loading !== ''}
                 loading={loading === 'joiningRoom'}
               />
             </div>
@@ -116,15 +116,17 @@ export default function Home() {
           <Button
             text="Create new room"
             onClick={handleCreateRoom}
-            disabled={!name || loading !== ''}
+            disabled={!name || roomCode || !recaptchaToken || loading !== ''}
             loading={loading === 'creatingNewRoom'}
           />
         </div>
-        <ReCAPTCHA
-          sitekey={process.env.REACT_APP_RECAPTCHA_CLIENT}
-          onChange={captchaChange}
-          theme='dark'
-        />
+        <div className='row body mg-top-10'>
+          <ReCAPTCHA
+            sitekey={process.env.REACT_APP_RECAPTCHA_CLIENT}
+            onChange={captchaChange}
+            theme='dark'
+          />
+        </div>
       </div>
     </div>
   )
