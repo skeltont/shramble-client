@@ -16,8 +16,14 @@ export default function Results({ owner, changeStage }) {
     }
   }, [])
 
-  function handleNewMatch(e) {
-    console.log('todo');
+  async function handleNewMatch(e) {
+    const response = await makeGetRequest("/match/new")
+
+    if (response.ok) {
+      changeStage(response.data['next_stage'])
+    } else {
+      // TODO handle error
+    }
   }
 
   return (
@@ -46,8 +52,8 @@ export default function Results({ owner, changeStage }) {
         </div>
         {owner &&
           <div className='row'>
-            <Button 
-              text="End Match"
+            <Button
+              text="New Match"
               className='wide primary'
               onClick={handleNewMatch}
             />
