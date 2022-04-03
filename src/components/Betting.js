@@ -32,7 +32,6 @@ export default function Betting({ owner, changeStage }) {
       }
     })
     setSelectedContestant(e.target.value);
-
   }
 
   async function handleBeginMatch(e) {

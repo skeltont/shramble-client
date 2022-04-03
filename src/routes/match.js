@@ -52,7 +52,7 @@ export default function Match() {
       { stage === 'betting' &&
         <Betting owner={owner} changeStage={changeStage} />
       }
-      { stage === 'onging' &&
+      { stage === 'ongoing' &&
         <Ongoing owner={owner} changeStage={changeStage} />
       }
       { stage === 'results' &&
