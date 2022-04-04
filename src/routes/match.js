@@ -7,12 +7,14 @@ import Betting from '../components/Betting';
 import Ongoing from '../components/Ongoing';
 import Results from '../components/Results';
 
+const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
+
 export default function Match() {
   const [stage, setStage] = useState('pending')
   const { state } = useLocation();
   const { owner, room_code } = state;
 
-  const cable = ActionCable.createConsumer('ws://localhost:4000/cable')
+  const cable = ActionCable.createConsumer(WEBSOCKET_URL)
 
   function createSubscription() {
     cable.subscriptions.create(
