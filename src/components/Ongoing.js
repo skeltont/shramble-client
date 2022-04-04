@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
 import Button from '../components/common/Button.tsx'
 
-export default function Ongoing({ owner, changeStage }) {
+export default function Ongoing({ owner }) {
   const [results, setResults] = useState([{name: '', bet: ''}])
   const [contestantList, setContestantList] = useState([{ id: '', name: '' }])
   const [matchId, setMatchId] = useState(null)
@@ -35,7 +35,7 @@ export default function Ongoing({ owner, changeStage }) {
     setLoading('')
 
     if (response.ok) {
-      changeStage(response.data['next_stage'])
+      // TODO anything?
     } else {
       // TODO handle error
     }
