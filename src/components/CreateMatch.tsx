@@ -7,7 +7,6 @@ import { makePostRequest } from '../hooks/makeRequest'
 
 interface CreateMatchProps {
   owner: boolean,
-  changeStage: (newStage: string) => void,
 }
 
 interface Contestant {
@@ -15,7 +14,7 @@ interface Contestant {
 }
 interface Contestants extends Array<Contestant>{}
 
-export default function CreateMatch({owner, changeStage} : CreateMatchProps) {
+export default function CreateMatch({owner} : CreateMatchProps) {
   const [stake, setStake] = useState('')
   const [contestants, setContestants] = useState<Contestants>([{ name: ''}])
 
@@ -49,7 +48,7 @@ export default function CreateMatch({owner, changeStage} : CreateMatchProps) {
     })
 
     if (response.ok) {
-      changeStage(response.data['next_stage'])
+      // TODO anything?
     } else {
       // TODO Handle Error
     }

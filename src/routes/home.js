@@ -13,6 +13,7 @@ export default function Home() {
   const [roomCode, setRoomCode] = useState('')
   const [join, setJoin] = useState({
     owner: false,
+    room_code: null,
     redirect: false
   })
   const [loading, setLoading] = useState('')
@@ -43,6 +44,7 @@ export default function Home() {
       sessionStorage.setItem('shrambleToken', response.data['token'])
       setJoin({
         owner: response.data['owner'],
+        room_code: response.data['room_code'],
         redirect: true
       })
     } else {
@@ -65,6 +67,7 @@ export default function Home() {
       sessionStorage.setItem('shrambleToken', response.data['token'])
       setJoin({
         owner: response.data['owner'],
+        room_code: response.data['room_code'],
         redirect: true,
       })
     } else {
@@ -78,10 +81,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const { owner, redirect } = join
+    const { owner, room_code, redirect } = join
 
     if (redirect) {
-      navigate('/match', { state: { owner } })
+      navigate('/match', { state: { owner, room_code } })
     }
   })
 

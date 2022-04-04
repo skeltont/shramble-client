@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { makeGetRequest } from '../hooks/makeRequest';
 import Button from '../components/common/Button.tsx'
 
-export default function Results({ owner, changeStage }) {
+export default function Results({ owner }) {
   const [standings, setStandings] = useState([{ name: '', winnings: 0.0 }])
 
   useEffect(async () => {
@@ -20,7 +20,7 @@ export default function Results({ owner, changeStage }) {
     const response = await makeGetRequest("/match/new")
 
     if (response.ok) {
-      changeStage(response.data['next_stage'])
+      // TODO anything?
     } else {
       // TODO handle error
     }

@@ -20,10 +20,12 @@ export async function makePostRequest(path: string, body: object): Promise<Respo
       body: JSON.stringify(body)
     })
 
+    const data = await request.text()
+
     return {
       status: request.status,
       ok: request.ok,
-      data: await request.json()
+      data: (data) ? JSON.parse(data) : {}
     }
   } catch (error) {
     // TODO This should only handle actual errors not 400/500 responses
@@ -47,10 +49,12 @@ export async function makeGetRequest(path: string): Promise<Response> {
       }
     })
 
+    const data = await request.text()
+
     return {
       status: request.status,
       ok: request.ok,
-      data: await request.json()
+      data: (data) ? JSON.parse(data) : {}
     }
   } catch (error) {
     // TODO This should only handle actual errors not 400/500 responses

@@ -5,7 +5,7 @@ import Button from '../components/common/Button.tsx'
 
 import { makeGetRequest, makePostRequest } from '../hooks/makeRequest';
 
-export default function Betting({ owner, changeStage }) {
+export default function Betting({ owner }) {
   const [contestantList, setContestantList] = useState([{ id: '', name: '' }])
   const [matchId, setMatchId] = useState(null)
   const [selectedContestant, setSelectedContestant] = useState(null)
@@ -43,7 +43,7 @@ export default function Betting({ owner, changeStage }) {
       }
     })
     if (response.ok) {
-      changeStage(response.data['next_stage']);
+      // TODO anything?
     } else {
       // TODO handle error
     }
