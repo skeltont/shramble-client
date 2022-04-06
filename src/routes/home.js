@@ -11,11 +11,12 @@ import { makePostRequest } from '../hooks/makeRequest'
 export default function Home() {
   const [name, setName] = useState('')
   const [roomCode, setRoomCode] = useState('')
-  const [join, setJoin] = useState({
+  const [joinParams, setJoinParams] = useState({
     owner: false,
+    room_stage: null,
     room_code: null,
-    redirect: false
   })
+  const [willRedirect, setWillRedirect] = useState(false)
   const [loading, setLoading] = useState('')
   const [recaptchaToken, setRecaptchaToken] = useState('')
 
@@ -42,11 +43,11 @@ export default function Home() {
 
     if (response.ok) {
       sessionStorage.setItem('shrambleToken', response.data['token'])
-      setJoin({
+      setJoinParams({
         owner: response.data['owner'],
         room_code: response.data['room_code'],
-        redirect: true
       })
+      setWillRedirect(true)
     } else {
       // TODO handle error
     }
@@ -65,11 +66,12 @@ export default function Home() {
 
     if (response.ok && 'token' in response.data) {
       sessionStorage.setItem('shrambleToken', response.data['token'])
-      setJoin({
+      setJoinParams({
         owner: response.data['owner'],
+        room_stage: response.data['stage'],
         room_code: response.data['room_code'],
-        redirect: true,
       })
+      setWillRedirect(true)
     } else {
       // TODO handle error
     }
@@ -81,10 +83,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    const { owner, room_code, redirect } = join
+    const { owner, room_stage, room_code } = joinParams
 
-    if (redirect) {
-      navigate('/match', { state: { owner, room_code } })
+    if (willRedirect) {
+      navigate('/match', { state: { owner, room_stage, room_code } })
     }
   })
 

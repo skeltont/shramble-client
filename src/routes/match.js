@@ -12,7 +12,7 @@ const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 export default function Match() {
   const [stage, setStage] = useState('pending')
   const { state } = useLocation();
-  const { owner, room_code } = state;
+  const { owner, room_stage, room_code } = state;
 
   const cable = ActionCable.createConsumer(WEBSOCKET_URL)
 
@@ -31,6 +31,7 @@ export default function Match() {
   }
 
   useEffect(() => {
+    if (room_stage) setStage(room_stage)
     createSubscription()
   }, [])
 
