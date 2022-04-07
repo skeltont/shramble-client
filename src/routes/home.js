@@ -10,7 +10,8 @@ import { makePostRequest } from '../hooks/makeRequest'
 
 export default function Home() {
   const [name, setName] = useState('')
-  const [roomCode, setRoomCode] = useOutletContext()
+  const [roomCode, setRoomCode] = useState('')
+  const [_, resetLastRoomToken] = useOutletContext()
   const [joinParams, setJoinParams] = useState({
     owner: false,
     room_stage: null,
@@ -64,8 +65,10 @@ export default function Home() {
     })
     setLoading('')
 
-    if (response.ok && 'token' in response.data) {
-      sessionStorage.setItem('shrambleToken', response.data['token'])
+    if (response.ok) {
+      if ('token' in response.data) {
+        sessionStorage.setItem('shrambleToken', response.data['token'])
+      }
       setJoinParams({
         owner: response.data['owner'],
         room_stage: response.data['stage'],
@@ -89,7 +92,7 @@ export default function Home() {
       navigate('/match', { state: { owner, room_stage, room_code } })
     }
 
-    setRoomCode('')
+    resetLastRoomToken('')
   })
 
   return (

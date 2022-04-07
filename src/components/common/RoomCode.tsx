@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import '../../style/RoomCode.scss'
 
@@ -13,6 +13,10 @@ export default function RoomCode({ value }: RoomCodeProps) {
   async function copyTextToClipboard(value: string) {
     return await navigator.clipboard.writeText(value);
   }
+
+  useEffect(() => {
+    setDisplayText(value)
+  }, [value])
 
   function handleCopyClick() {
     copyTextToClipboard(value)
