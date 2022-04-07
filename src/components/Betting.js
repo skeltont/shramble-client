@@ -75,6 +75,9 @@ export default function Betting({ owner }) {
 
   return (
     <div className='Betting form'>
+      <div className='stage-instruction-container'>
+        <span></span>
+      </div>
       <div className="row mg-top-10">
         <div className="input-group">
           <label>Select a Contestant</label>

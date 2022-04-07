@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useOutletContext } from 'react-router-dom';
 import ActionCable from 'actioncable';
 
 import CreateMatch from '../components/CreateMatch.tsx';
@@ -13,6 +13,8 @@ const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 export default function Match() {
   const [stage, setStage] = useState('pending')
+  const [roomCode, setRoomCode] = useOutletContext();
+
   const { state } = useLocation();
   const { owner, room_stage, room_code } = state;
 
@@ -33,13 +35,13 @@ export default function Match() {
   }
 
   useEffect(() => {
+    setRoomCode(room_code)
     if (room_stage) setStage(room_stage)
     createSubscription()
   }, [])
 
   return (
     <div className='Match body'>
-      <RoomCode text={room_code} />
       { stage === 'pending' &&
         <CreateMatch owner={owner} />
       }

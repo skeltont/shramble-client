@@ -29,7 +29,9 @@ export default function Results({ owner }) {
   return (
     <div className='Results'>
       <div className='Ongoing form'>
-        <h1>Standings</h1>
+        <div className='stage-header'>
+          <h1>Standings</h1>
+        </div>
         <div className='standings'>
           <table>
             <thead>
@@ -51,7 +53,7 @@ export default function Results({ owner }) {
           </table>
         </div>
         {owner &&
-          <div className='row'>
+          <div className='row extra-space'>
             <Button
               text="New Match"
               className='wide primary'
