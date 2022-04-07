@@ -69,7 +69,7 @@ export default function Ongoing({ owner }) {
         </table>
       </div>
       { owner &&
-        <div className='contestants form mg-top-10'>
+        <div className='contestants form mg-top-30'>
           {contestantList.map((x, i) => {
             return (
               <div className='row' key={i}>

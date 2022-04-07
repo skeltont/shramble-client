@@ -64,6 +64,9 @@ export default function CreateMatch({owner} : CreateMatchProps) {
   if (owner) {
     return (
       <div className='CreateMatch form'>
+        <div className='stage-instruction-container'>
+          <span>Create a new match, set the wager and the contestants</span>
+        </div>
         <div className="row mg-top-10">
           <div className="input-group">
             <label>Stake</label>
@@ -117,7 +120,9 @@ export default function CreateMatch({owner} : CreateMatchProps) {
 
   return (
     <div className='CreateMatch'>
-      waiting for match to begin, hold tight!
+      <div className='stage-instruction-container'>
+        <span>waiting for match to begin, hold tight!</span>
+      </div>
     </div>
   )
 }
