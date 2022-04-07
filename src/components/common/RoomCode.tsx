@@ -3,35 +3,32 @@ import React, { useState } from 'react'
 import '../../style/RoomCode.scss'
 
 interface RoomCodeProps {
-  text: string
+  value: string
 }
 
-export default function RoomCode({ text }: RoomCodeProps) {
+export default function RoomCode({ value }: RoomCodeProps) {
   const [isCopied, setIsCopied] = useState(false)
+  const [displayText, setDisplayText] = useState(value)
 
-  async function copyTextToClipboard(text: string) {
-    return await navigator.clipboard.writeText(text);
+  async function copyTextToClipboard(value: string) {
+    return await navigator.clipboard.writeText(value);
   }
 
   function handleCopyClick() {
-    copyTextToClipboard(text)
+    copyTextToClipboard(value)
       .then(() => {
-        setIsCopied(true)
+        setDisplayText('Copied!')
         setTimeout(() => {
-          setIsCopied(false)
+          setDisplayText(value)
         }, 1500)
       })
   }
 
   return (
-    <div className='room-code-container'>
-      <div className='room-code-gutter'></div>
+    <div className='room-code-container' style={{ visibility: value ? 'visible' : 'hidden' }}>
       <button className='room-code-button' onClick={handleCopyClick}>
-        <span>{ text }</span>
+        <span>{ displayText }</span>
       </button>
-      <div className='room-code-gutter'>
-        <span className='room-code-alert' style={{visibility: isCopied ? 'visible' : 'hidden'}}>{isCopied ? 'Copied!' : 'Copy'}</span>
-      </div>
     </div>
   );
 }

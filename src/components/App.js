@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet'
+import { Outlet } from 'react-router-dom'
 
 import '../style/App.scss';
 
-import { Outlet } from 'react-router-dom'
+import RoomCode from '../components/common/RoomCode.tsx'
 
 export default function App() {
   const [roomCode, setRoomCode] = useState('')
@@ -26,7 +27,7 @@ export default function App() {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', padding: '5px'}}>
-          { roomCode }
+          <RoomCode value={roomCode} />
         </div>
       </header>
       <div className='content'>

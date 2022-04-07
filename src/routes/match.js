@@ -7,8 +7,6 @@ import Betting from '../components/Betting';
 import Ongoing from '../components/Ongoing';
 import Results from '../components/Results';
 
-import RoomCode from '../components/common/RoomCode.tsx'
-
 const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 export default function Match() {

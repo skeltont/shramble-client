@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import ReCAPTCHA from "react-google-recaptcha"
 
 
@@ -10,7 +10,7 @@ import { makePostRequest } from '../hooks/makeRequest'
 
 export default function Home() {
   const [name, setName] = useState('')
-  const [roomCode, setRoomCode] = useState('')
+  const [roomCode, setRoomCode] = useOutletContext()
   const [joinParams, setJoinParams] = useState({
     owner: false,
     room_stage: null,
@@ -88,6 +88,8 @@ export default function Home() {
     if (willRedirect) {
       navigate('/match', { state: { owner, room_stage, room_code } })
     }
+
+    setRoomCode('')
   })
 
   return (
