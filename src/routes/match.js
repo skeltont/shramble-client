@@ -7,6 +7,8 @@ import Betting from '../components/Betting';
 import Ongoing from '../components/Ongoing';
 import Results from '../components/Results';
 
+import RoomCode from '../components/common/RoomCode.tsx'
+
 const WEBSOCKET_URL = process.env.REACT_APP_WEBSOCKET_URL;
 
 export default function Match() {
@@ -37,9 +39,7 @@ export default function Match() {
 
   return (
     <div className='Match body'>
-      <h2>
-        {room_code}
-      </h2>
+      <RoomCode text={room_code} />
       { stage === 'pending' &&
         <CreateMatch owner={owner} />
       }
