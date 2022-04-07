@@ -1,0 +1,27 @@
+.room-code-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room-code-button {
+  padding: 10px 40px;
+  font-size: large;
+  border-radius: 10px;
+  background-color: rgba(19, 36, 58, 0.4);
+  color: white;
+
+  &:active {
+    background: rgba(176, 174, 243, 0.322);
+    -webkit-box-shadow: inset 0px 0px 5px #c1c1c1;
+    -moz-box-shadow: inset 0px 0px 5px #c1c1c1;
+    box-shadow: inset 0px 0px 5px #c1c1c1;
+    outline: none;
+  }
+}
+
+.room-code-gutter {
+  margin: 5px;
+  width: 50px;
+}
